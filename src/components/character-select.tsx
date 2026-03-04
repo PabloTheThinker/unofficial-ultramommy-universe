@@ -293,9 +293,7 @@ export function CharacterSelect() {
       {/* Top bar — fixed height */}
       <div className="relative z-10 flex items-center justify-between px-4 sm:px-6 py-3 border-b border-white/[0.06] flex-shrink-0">
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded bg-um-purple/20 border border-um-purple/30 flex items-center justify-center">
-            <span className="text-um-purple text-[10px] font-bold font-mono">U</span>
-          </div>
+          <Image src="/logo.png" alt="UM" width={28} height={28} className="w-7 h-7 object-contain" />
           <span className="text-[12px] sm:text-[13px] font-mono text-um-text-dim tracking-[0.15em] uppercase">
             Ultra Mommy Universe
           </span>

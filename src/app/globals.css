@@ -2,26 +2,193 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 228 72% 5%;
+    --foreground: 214 32% 91%;
+    --card: 222 47% 11%;
+    --card-foreground: 214 32% 91%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 214 32% 91%;
+    --primary: 263 70% 76%;
+    --primary-foreground: 228 72% 5%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 214 32% 91%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 217 33% 17%;
+    --accent-foreground: 214 32% 91%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 216 50% 16%;
+    --input: 216 50% 16%;
+    --ring: 263 70% 76%;
+    --radius: 0.75rem;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-um-bg text-um-text antialiased;
+    background-image:
+      radial-gradient(rgba(167, 139, 250, 0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  ::selection {
+    background: rgba(167, 139, 250, 0.3);
+    color: #e2e8f0;
+  }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer components {
+  /* Glass Card — the core Warren OS component */
+  .glass-card {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(30, 58, 95, 0.3);
+    border-radius: 14px;
+    transition: all 150ms ease;
+  }
+
+  .glass-card:hover {
+    background: rgba(15, 23, 42, 0.75);
+    border-color: rgba(60, 90, 140, 0.4);
+    transform: translateY(-1px);
+  }
+
+  /* Glass card with colored left border accent */
+  .glass-card-accent {
+    @apply glass-card;
+    border-left: 3px solid rgba(167, 139, 250, 0.6);
+  }
+
+  .glass-card-accent:hover {
+    border-left-color: #A78BFA;
+  }
+
+  /* Premium glass with inner glow — hero/featured sections */
+  .glass-premium {
+    background: linear-gradient(180deg, rgba(10, 9, 9, 0.9) 0%, rgba(9, 16, 31, 0.95) 100%);
+    border-radius: 24px;
+    border: 1px solid rgba(30, 58, 95, 0.25);
+    box-shadow:
+      inset 0 -80px 60px -30px rgba(124, 58, 237, 0.12),
+      inset 0 -40px 30px -8px rgba(167, 139, 250, 0.08),
+      inset 0 -20px 20px -6px rgba(255, 255, 255, 0.03),
+      inset 0 6px 6px -2px rgba(167, 139, 250, 0.05);
+  }
+
+  /* Glow effects */
+  .glow-purple {
+    box-shadow: 0 0 20px rgba(167, 139, 250, 0.15),
+                0 0 60px rgba(167, 139, 250, 0.05);
+  }
+
+  .glow-cyan {
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.15),
+                0 0 60px rgba(34, 211, 238, 0.05);
+  }
+
+  .glow-green {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.15);
+  }
+
+  /* Text glow */
+  .text-glow-purple {
+    text-shadow: 0 0 20px rgba(167, 139, 250, 0.4),
+                 0 0 40px rgba(167, 139, 250, 0.1);
+  }
+
+  .text-glow-cyan {
+    text-shadow: 0 0 20px rgba(34, 211, 238, 0.4),
+                 0 0 40px rgba(34, 211, 238, 0.1);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #A78BFA 0%, #22D3EE 50%, #A78BFA 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-text-warm {
+    background: linear-gradient(135deg, #A78BFA 0%, #F97316 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Gradient border trick */
+  .gradient-border {
+    position: relative;
+    background: rgba(15, 23, 42, 0.6);
+    border-radius: 14px;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(167, 139, 250, 0.3), rgba(34, 211, 238, 0.3));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Status dots */
+  .status-dot {
+    @apply w-2 h-2 rounded-full;
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  /* Shimmer loading */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(15, 23, 42, 0.4) 25%,
+      rgba(30, 58, 95, 0.3) 50%,
+      rgba(15, 23, 42, 0.4) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+  }
+
+  /* Glass input fields */
+  .glass-input {
+    @apply bg-um-surface-solid border border-um-border rounded-md px-3 py-2 text-sm text-um-text placeholder:text-um-text-dim;
+    backdrop-filter: blur(8px);
+    transition: all 150ms ease;
+  }
+
+  .glass-input:focus {
+    @apply outline-none border-um-purple ring-1 ring-um-purple/30;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(30, 58, 95, 0.4);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(60, 90, 140, 0.5);
   }
 }

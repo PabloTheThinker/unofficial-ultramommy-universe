@@ -34,3 +34,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# source images (originals kept locally, copies in public/characters/)
+/Heydotlol_logo.png
+/UltraMommy.png
+/UltraMommy_02.png
+/UltraSister.png
+
+# project docs
+ultra_mommy_universe_prd_v1.md

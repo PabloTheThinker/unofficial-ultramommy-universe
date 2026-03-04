@@ -94,7 +94,7 @@ const characters: CharacterData[] = [
     name: "Fat Tiga",
     slug: "fat-tiga",
     type: "canon",
-    colors: ["red", "purple", "silver"],
+    colors: ["red", "blue", "silver"],
     powers: ["Belly bounce", "Tiga beam", "Comedic relief", "Family bonding"],
     first_appearance: "2025-03-04",
     first_appearance_url: "https://x.com/SuperSisi/status/2029024946152968318",

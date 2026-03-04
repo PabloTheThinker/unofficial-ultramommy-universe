@@ -24,6 +24,7 @@ interface CharacterData {
   image: string;
   width: number;
   height: number;
+  imageScale?: number;
   codex: CodexSection[];
 }
 
@@ -87,6 +88,26 @@ const characters: CharacterData[] = [
       { title: "Appearance", content: "Ultra Thicc wears the classic red and silver Ultra armor in an exaggerated, curvy form. Her design features pigtail-like head fins, glowing yellow eyes, and a blue chest crystal. The suit's proportions are intentionally over-the-top, leaning fully into the parody aesthetic." },
       { title: "Powers & Abilities", content: "Giant Transformation — Standard Ultra-family size-shifting\nBody Slam — A devastating close-range attack using her full mass\nThicc Shield — Can absorb impacts that would flatten other Ultras\nSeismic Stomp — Ground-shaking attack that stuns kaiju" },
       { title: "Cultural Impact", content: "Ultra Thicc proved the Ultra Mommy Universe welcomes every body type. Her introduction expanded the roster's diversity and reinforced the series' light-hearted, inclusive tone. Pure fanservice energy with genuine heroic spirit." },
+    ],
+  },
+  {
+    name: "Fat Tiga",
+    slug: "fat-tiga",
+    type: "canon",
+    colors: ["red", "purple", "silver"],
+    powers: ["Belly bounce", "Tiga beam", "Comedic relief", "Family bonding"],
+    first_appearance: "2025-03-04",
+    first_appearance_url: "https://x.com/SuperSisi/status/2029024946152968318",
+    tagline: "Ultra Sister's brother — the only confirmed male in the Ultra family.",
+    image: "/characters/fat-tiga.png",
+    width: 768,
+    height: 1360,
+    imageScale: 1.3,
+    codex: [
+      { title: "Origin", content: "Fat Tiga was canonically confirmed on March 4, 2025, when @SuperSisi declared him Ultra Sister's brother. A chubby parody of Ultraman Tiga, he is the first and only confirmed male member of the Ultra Mommy family." },
+      { title: "Appearance", content: "Fat Tiga wears the classic red, purple, and silver Tiga color scheme but with a rotund, heavyset build. His design features a green chest crystal, glowing yellow eyes, and the iconic Tiga head crest — all rendered with comedic exaggeration." },
+      { title: "Powers & Abilities", content: "Belly Bounce — Uses his massive frame to deflect attacks\nTiga Beam — A classic energy beam fired from his chest crystal\nComedic Relief — Disarms enemies with unexpected humor\nFamily Bonding — Strengthens the Ultra family through brotherhood" },
+      { title: "Family Connections", content: "Canonically Ultra Sister's brother. His addition proves the Ultra Mommy Universe is open to male characters and comedic crossovers, expanding the family dynamic beyond the sisterhood." },
     ],
   },
 ];
@@ -380,8 +401,8 @@ export function CharacterSelect() {
           </AnimatePresence>
         </div>
 
-        {/* Right panel — portraits constrained to available height */}
-        <div className="flex-1 flex items-center justify-center gap-3 lg:gap-4 p-3 lg:p-5 min-h-0 overflow-hidden">
+        {/* Right panel — portraits with uniform height */}
+        <div className="flex-1 flex items-end justify-center gap-3 lg:gap-5 p-3 lg:p-6 min-h-0 overflow-hidden">
           {characters.map((c, i) => {
             const isSelected = i === selected;
             const accent = colorMap[c.colors[0]] || "#a78bfa";
@@ -390,22 +411,21 @@ export function CharacterSelect() {
               <motion.button
                 key={c.slug}
                 onClick={() => setSelected(i)}
-                className={`relative flex flex-col items-stretch transition-all duration-300 outline-none group max-h-full ${
+                className={`relative flex flex-col items-stretch transition-all duration-300 outline-none group ${
                   isSelected ? "z-10" : "z-0"
                 }`}
                 style={{
                   flex: isSelected ? "1.15" : "1",
-                  maxWidth: "400px",
+                  maxWidth: "380px",
+                  height: "100%",
                 }}
                 whileHover={{ scale: isSelected ? 1 : 1.02 }}
                 transition={{ duration: 0.2 }}
               >
-                {/* Portrait — per-character aspect ratio */}
+                {/* Portrait — uniform 3/4 aspect ratio for all characters */}
                 <div
-                  className="relative overflow-hidden flex-1 min-h-0 transition-all duration-300"
+                  className="relative overflow-hidden flex-1 min-h-0 rounded-t transition-all duration-300"
                   style={{
-                    aspectRatio: `${c.width} / ${c.height}`,
-                    maxHeight: "100%",
                     borderLeft: `1px solid ${isSelected ? accent + "40" : "rgba(255,255,255,0.06)"}`,
                     borderRight: `1px solid ${isSelected ? accent + "40" : "rgba(255,255,255,0.06)"}`,
                     borderTop: `1px solid ${isSelected ? accent + "40" : "rgba(255,255,255,0.06)"}`,
@@ -423,9 +443,13 @@ export function CharacterSelect() {
                     width={c.width}
                     height={c.height}
                     quality={100}
-                    className={`w-full h-full object-cover transition-all duration-500 ${
-                      isSelected ? "scale-100 brightness-100" : "scale-105 brightness-[0.6] grayscale-[30%]"
+                    className={`w-full h-full object-cover object-top transition-all duration-500 ${
+                      isSelected ? "brightness-100" : "brightness-[0.6] grayscale-[30%]"
                     } group-hover:brightness-[0.8] group-hover:grayscale-0`}
+                    style={{
+                      transform: `scale(${isSelected ? (c.imageScale || 1) : (c.imageScale || 1) * 1.05})`,
+                    }}
+                    sizes="(min-width: 1024px) 25vw, 50vw"
                     priority
                   />
 
@@ -450,9 +474,9 @@ export function CharacterSelect() {
                   )}
                 </div>
 
-                {/* Name plate */}
-                <div className={`px-3 py-2.5 transition-all duration-200 border-x border-b flex-shrink-0 ${isSelected ? "bg-white/[0.04]" : "bg-white/[0.02] group-hover:bg-white/[0.03]"}`}
-                  style={{ borderColor: isSelected ? accent + "40" : "rgba(255,255,255,0.06)" }}>
+                {/* Name plate — fixed height so all names align */}
+                <div className={`px-3 py-2.5 transition-all duration-200 border-x border-b flex-shrink-0 rounded-b ${isSelected ? "bg-white/[0.04]" : "bg-white/[0.02] group-hover:bg-white/[0.03]"}`}
+                  style={{ borderColor: isSelected ? accent + "40" : "rgba(255,255,255,0.06)", height: "40px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <p className={`text-[13px] font-semibold text-center truncate transition-colors ${isSelected ? "text-um-text" : "text-um-text-muted group-hover:text-um-text"}`}>
                     {c.name}
                   </p>
@@ -475,7 +499,9 @@ export function CharacterSelect() {
         </div>
         <div className="flex items-center gap-3">
           <a href="https://x.com/SuperSisi" target="_blank" rel="noopener noreferrer" className="text-[10px] font-mono text-um-text-dim hover:text-um-purple transition-colors tracking-wider">@SUPERSISI</a>
-          <span className="text-[10px] font-mono text-um-text-dim opacity-50">FAN PROJECT</span>
+          <span className="text-[10px] font-mono text-um-text-dim opacity-50">|</span>
+          <span className="text-[10px] font-mono text-um-text-dim opacity-50">BUILT BY</span>
+          <a href="https://x.com/pablothethinker" target="_blank" rel="noopener noreferrer" className="text-[10px] font-mono text-um-text-dim hover:text-um-cyan transition-colors tracking-wider">@PABLOTHETHINKER</a>
         </div>
       </div>
     </div>

@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Rajdhani, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
-const inter = Inter({
+const rajdhani = Rajdhani({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-rajdhani",
   display: "swap",
 });
 
@@ -38,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${inter.variable} ${jetbrains.variable} font-sans min-h-screen flex flex-col`}
+        className={`${rajdhani.variable} ${jetbrains.variable} font-sans min-h-screen flex flex-col`}
       >
         {children}
         <Analytics />

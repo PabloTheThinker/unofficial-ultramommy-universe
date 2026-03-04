@@ -74,8 +74,8 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-inter)"],
-        mono: ["var(--font-jetbrains)"],
+        sans: ["var(--font-rajdhani)", "system-ui", "sans-serif"],
+        mono: ["var(--font-jetbrains)", "monospace"],
       },
       keyframes: {
         "pulse-glow": {
